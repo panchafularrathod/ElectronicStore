@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.bikkadIt.electronicstore.ElectronicStore.payload.ApiResponceMessage.*;
+
 @RestControllerAdvice
 public class GlobleExceptionHalder {
 
@@ -21,7 +23,7 @@ public class GlobleExceptionHalder {
         @ExceptionHandler(ResourceNotFoundException.class)
         public ResponseEntity<ApiResponceMessage> resouceNotFoundExceptionHandler(ResourceNotFoundException ex){
             logger.info("Exception Handler invoked..");
-            ApiResponceMessage response=  ApiResponceMessage.builder().message(ex.getMessage()).success(true).build();
+            ApiResponceMessage response=  builder().message(ex.getMessage()).success(true).build();
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
         //   MethodargumentNotValidException
@@ -37,6 +39,12 @@ public class GlobleExceptionHalder {
             return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);
 
         }
+    @ExceptionHandler(BadApiRequeast.class)
+    public ResponseEntity<ApiResponceMessage> handleBadApiRequest(BadApiRequeast ex){
+        logger.info("Bad Api Request..");
+        ApiResponceMessage response=  builder().message(ex.getMessage()).success(false).build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
     }
 
 

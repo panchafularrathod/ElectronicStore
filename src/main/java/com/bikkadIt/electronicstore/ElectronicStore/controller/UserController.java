@@ -2,17 +2,28 @@ package com.bikkadIt.electronicstore.ElectronicStore.controller;
 
 import com.bikkadIt.electronicstore.ElectronicStore.config.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
+import com.bikkadIt.electronicstore.ElectronicStore.payload.ImageResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
+import com.bikkadIt.electronicstore.ElectronicStore.service.FileService;
+import com.bikkadIt.electronicstore.ElectronicStore.service.FileServiceImpl;
 import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceI;
 import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -21,6 +32,10 @@ public class UserController {
 
 @Autowired
         private UserServiceI userServiceI;
+        @Autowired
+        private FileService fileService;
+        @Value("${user.profile.image.path}")
+        private String imageUploadPath;
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -134,6 +149,32 @@ public class UserController {
             logger.info("Complete the request for search user data with Keyword");
             return new ResponseEntity<>(userServiceI.searchUser(keyword),HttpStatus.OK);
         }
+
+        //upload User Image
+           @PostMapping("/image/{userId}")
+        public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage")MultipartFile image,
+                                                             @PathVariable String userId) throws IOException {
+
+               String imageNmae = fileService.uploadFile(image, imageUploadPath);
+               UserDto user = userServiceI.getUserById(userId);
+               user.setImageName(imageNmae);
+               UserDto userDto = userServiceI.updateUser(user, userId);
+
+               ImageResponse imageResponse=ImageResponse.builder().imageName(imageNmae).
+                       success(true).status(HttpStatus.CREATED).build();
+               return new ResponseEntity <>(imageResponse,HttpStatus.CREATED);
+           }
+
+           @GetMapping(value ="/image/{userId}")
+           public void serveUserImage(@PathVariable String userId, HttpServletResponse response) throws IOException {
+               UserDto user = userServiceI.getUserById(userId);
+               logger.info("user image name : {}",user.getImageName());
+               InputStream resource =fileService.getResource(imageUploadPath,user.getImageName());
+               response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+               StreamUtils.copy(resource,response.getOutputStream());
+
+           }
+
     }
 
 

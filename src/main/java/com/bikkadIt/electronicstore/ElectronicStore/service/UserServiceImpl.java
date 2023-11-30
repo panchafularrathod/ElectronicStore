@@ -11,12 +11,18 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,6 +33,10 @@ public class UserServiceImpl implements UserServiceI{
         private UserRepository userRepository;
            @Autowired
         private ModelMapper modelMapper;
+
+    @Value("${user.profile.image.path}")
+
+           private String imagePath;
 
            private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -68,6 +78,19 @@ public class UserServiceImpl implements UserServiceI{
             logger.info("Intiating the dao call for delete the user data with the userId{}:......");
             User user = (User) userRepository.findById(userid).orElseThrow( ()->
                     new ResourceNotFoundException(AppConstant.NOT_FOUND));
+
+            //delete user profile image
+          // images/users/abc.png
+            String fullPath = imagePath + user.getImageName();
+            try {
+            Path path= Paths.get(fullPath);
+            Files.delete(path);}
+            catch(NoSuchFileException ex){
+                logger.info("User iname not found in folder");
+                ex.printStackTrace();
+            }catch (IOException ex){
+                 ex.printStackTrace();
+            }
             userRepository.delete(user);
             logger.info("complete the dao call for delete the user data with the userId{}:......");
         }
