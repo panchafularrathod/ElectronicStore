@@ -34,6 +34,8 @@ public class User {
 
         @Column(name="user_imageimagename")
         private String imageName;
+
+        private String roles;
     }
 
 

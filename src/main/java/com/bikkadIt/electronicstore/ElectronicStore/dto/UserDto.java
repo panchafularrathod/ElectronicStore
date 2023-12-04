@@ -31,6 +31,7 @@ public class UserDto {
         private String imageName;
         @NotBlank(message = "Write something")
         private String about;
+        private String roles;
     }
 
 

@@ -6,18 +6,21 @@ import com.bikkadIt.electronicstore.ElectronicStore.entities.User;
 import com.bikkadIt.electronicstore.ElectronicStore.exception.ResourceNotFoundException;
 import com.bikkadIt.electronicstore.ElectronicStore.helper.Helper;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
+import com.bikkadIt.electronicstore.ElectronicStore.repository.RoleRepository;
 import com.bikkadIt.electronicstore.ElectronicStore.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserServiceI{
         private UserRepository userRepository;
            @Autowired
         private ModelMapper modelMapper;
+           private RoleRepository roleRepository;
 
     @Value("${user.profile.image.path}")
 
@@ -42,9 +46,18 @@ public class UserServiceImpl implements UserServiceI{
 
         public UserDto createUser(UserDto userDto) {
             logger.info("Intiating the dao call for the create user.............");
+
+            //generate uniue id in  String format
             String userId= UUID.randomUUID().toString();
             userDto.setUserid(userId);
+
+            //encoding password
+           // userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             User user = this.modelMapper.map(userDto, User.class);
+
+            //fetch role of normal and set  it to user
+          // Role role =roleRepository.findById(normalRoleId).get();
+           // user.getRoles().add(role);
             User savedUser= userRepository.save(user);
             UserDto userDto1 = this.modelMapper.map(savedUser, UserDto.class);
             logger.info("complete the dao call for create user.......");
@@ -86,7 +99,7 @@ public class UserServiceImpl implements UserServiceI{
             Path path= Paths.get(fullPath);
             Files.delete(path);}
             catch(NoSuchFileException ex){
-                logger.info("User iname not found in folder");
+                logger.info("User image not found in folder");
                 ex.printStackTrace();
             }catch (IOException ex){
                  ex.printStackTrace();
