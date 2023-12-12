@@ -1,13 +1,11 @@
 package com.bikkadIt.electronicstore.ElectronicStore.controller;
 
-import com.bikkadIt.electronicstore.ElectronicStore.config.AppConstant;
+import com.bikkadIt.electronicstore.ElectronicStore.Constant.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.ImageResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.service.FileService;
-import com.bikkadIt.electronicstore.ElectronicStore.service.FileServiceImpl;
 import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceI;
-import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
