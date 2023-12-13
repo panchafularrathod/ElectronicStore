@@ -1,4 +1,4 @@
-package com.bikkadIt.electronicstore.ElectronicStore.config;
+package com.bikkadIt.electronicstore.ElectronicStore.Constant;
 
 public class AppConstant {
 
