@@ -1,19 +1,18 @@
-package com.bikkadIt.electronicstore.ElectronicStore.service;
+package com.bikkadIt.electronicstore.ElectronicStore.service.impl;
 
 import com.bikkadIt.electronicstore.ElectronicStore.exception.BadApiRequeast;
+import com.bikkadIt.electronicstore.ElectronicStore.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 @Service
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
 
     Logger logger= LoggerFactory.getLogger(FileServiceImpl.class);
     @Override
