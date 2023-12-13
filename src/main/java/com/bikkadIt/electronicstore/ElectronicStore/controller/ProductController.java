@@ -1,8 +1,7 @@
 package com.bikkadIt.electronicstore.ElectronicStore.controller;
 
-import com.bikkadIt.electronicstore.ElectronicStore.config.AppConstant;
+import com.bikkadIt.electronicstore.ElectronicStore.Constant.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.ProductDto;
-import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
 import com.bikkadIt.electronicstore.ElectronicStore.entities.Product;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.ApiResponceMessage;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.ImageResponse;
@@ -36,21 +35,43 @@ public class ProductController {
     @Value("${product.image.path}")
     private String imageUploadPath;
 
+    /**
+     * @param  productDto
+     * @return createproduct
+     * @auther panchafula
+     * @apiNote to search for live product
+     * */
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto){
+        logger.info("Entering the request for create the product data ");
 
         ProductDto creaeProduct = productServicce.createProduct(productDto);
+        logger.info("Complete the request for create the product data ");
         return new ResponseEntity<>(creaeProduct, HttpStatus.CREATED);
     }
 
+    /**
+     * @param  productId
+     * @return product
+     * @auther panchafula
+     * @apiNote to search for update poduct
+     * */
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct( @PathVariable String productId,
                                                      @RequestBody ProductDto productDto){
+        logger.info("Entering the request for update the product data with productyId",productId);
         ProductDto product = productServicce.updateProduct(productDto, productId);
+        logger.info("Complete the request for update product data with productyId",productId);
         return new ResponseEntity<>(product,HttpStatus.OK);
 
 
     }
+    /**
+     * @param  productId
+     * @return response
+     * @auther panchafula
+     * @apiNote to search for delete product
+     * */
     @DeleteMapping("/{productId}")
     public ResponseEntity<ApiResponceMessage> deleteProduct(@PathVariable String productId){
         logger.info("Entering the request for delete the product data with productyid{} ");
@@ -61,12 +82,24 @@ public class ProductController {
         return new ResponseEntity<>(response,HttpStatus.OK);
 
     }
+    /**
+     * @param  productId
+     * @return productDto
+     * @auther panchafula
+     * @apiNote to search for get single product
+     * */
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable String productId){
-
+        logger.info("Entering the request for get single product data with productyid{} ",productId);
         ProductDto productDto = productServicce.getProduct(productId);
+        logger.info("Complete the request for get single product data with productyId",productId);
         return new ResponseEntity<>(productDto,HttpStatus.OK);
     }
+    /**
+     * @param  pageNumber, pageSize, sortBy, sortDir
+     * @return response
+     * @auther panchafula
+     * @apiNote to search for all product*/
     @GetMapping
     public ResponseEntity<PagebleResponse<ProductDto>> getAllProduct
             (@RequestParam(value="pageNumber",defaultValue = AppConstant.PAGE_NUMBER,required = false) int pageNumber,
@@ -79,6 +112,12 @@ public class ProductController {
         logger.info("Complete the request for get the all Product data ");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    /**
+     * @param  pageNumber, pageSize, sortBy, sortDir
+     * @return response
+     * @auther panchafula
+     * @apiNote to search for live product
+     * */
     //get All Live
     // /product/live
     @GetMapping("/live")
@@ -93,6 +132,12 @@ public class ProductController {
         logger.info("Complete the request for get the all live Product data ");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    /**
+     * @param query, pageNumber, pageSize, sortBy, sortDir
+     * @return response
+     * @auther panchafula
+     * @apiNote to search for product
+     */
     @GetMapping("/search/{query}")
     public ResponseEntity<PagebleResponse<ProductDto>> searchProduct(@PathVariable String query,
             @RequestParam(value="pageNumber",defaultValue = AppConstant.PAGE_NUMBER,required = false) int pageNumber,
@@ -106,7 +151,12 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    /**
+     * @param productId
+     * @return imageResponse
+     * @auther panchafula
+     * @apiNote to upload image at given productId
+     */
     //serve image
     //upload image
     @PostMapping("/image/{productId}")
@@ -124,6 +174,13 @@ public class ProductController {
         return new ResponseEntity <>(imageResponse,HttpStatus.CREATED);
     }
 
+    /**
+     * @param productId
+     * @return
+     * @auther panchafula
+     * @apiNote to serv image at given productId
+     * @throws IOException
+     */
     @GetMapping(value ="/image/{productId}")
     public void serveUserImage(@PathVariable String productId, HttpServletResponse response) throws IOException {
         ProductDto product = productServicce.getProduct(productId);
