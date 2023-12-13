@@ -74,12 +74,31 @@ public class UserServiceTest {
         System.out.println(updateUser.getName());
         System.out.println(updateUser.getImageName());
         Assertions.assertNotNull(userDto);
+        Assertions.assertEquals(userDto.getName(),updateUser.getName(),"Name is not valid");}
+        @Test
+        public void deleteUserTest(){
+        String userId="useridcvb";
+        Mockito.when(userRepository.findById("useridcvb")).thenReturn(Optional.of(user));
+        userService.deleteUser(userId);
+        Mockito.verify(userRepository, Mockito.times(1)).delete(user);
 
+
+        }
+
+        public void getAllUserTest(){
+
+         User   user1=User.builder().name("Chiku Rathod").email("chiku@gmail.com").about("Engineer")
+                    .gender("male").imageName("abc.png").password("chiku*123").build();
+
+            List<User> userList= Arrays.asList(user, user1);
+        Page<User> page = new PageImpl<>(userList);
+            Mockito.when(userRepository.findAll((Pageable) Mockito.any())).thenReturn(page);
        // Sort sort= Sort.by("name").ascending();
        // Pageable pageble= PageRequest.of(1,2,sort);
         PagebleResponse<UserDto> allUser = userService.getAllUser(1,2,"name","asc");
 
         Assertions.assertEquals(2,allUser.getContent().size());
+
 
     }
 }
