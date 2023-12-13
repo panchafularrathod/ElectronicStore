@@ -1,6 +1,6 @@
-package com.bikkadIt.electronicstore.ElectronicStore.service;
+package com.bikkadIt.electronicstore.ElectronicStore.service.impl;
 
-import com.bikkadIt.electronicstore.ElectronicStore.config.AppConstant;
+import com.bikkadIt.electronicstore.ElectronicStore.Constant.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
 import com.bikkadIt.electronicstore.ElectronicStore.entities.User;
 import com.bikkadIt.electronicstore.ElectronicStore.exception.ResourceNotFoundException;
@@ -8,19 +8,18 @@ import com.bikkadIt.electronicstore.ElectronicStore.helper.Helper;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.repository.RoleRepository;
 import com.bikkadIt.electronicstore.ElectronicStore.repository.UserRepository;
+import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceI;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -31,7 +30,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserServiceI{
+public class UserServiceImpl implements UserServiceI {
         @Autowired
         private UserRepository userRepository;
            @Autowired
