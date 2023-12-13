@@ -2,6 +2,7 @@ package com.bikkadIt.electronicstore.ElectronicStore.controller;
 
 import com.bikkadIt.electronicstore.ElectronicStore.Constant.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
+import com.bikkadIt.electronicstore.ElectronicStore.payload.ApiResponceMessage;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.ImageResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.service.FileService;
@@ -61,11 +62,11 @@ public class UserController {
      */
         // detele
         @DeleteMapping("/{userId}")
-        public ResponseEntity<String>deleteUser(@Valid @PathVariable("userId") String userid) {
+        public ResponseEntity<ApiResponceMessage>deleteUser(@Valid @PathVariable("userId") String userid) {
             logger.info("Entering the request for delete the user data with userid{} ");
             this.userServiceI.deleteUser(userid);
             logger.info("Complete the request for delete the user data with userId");
-            return new ResponseEntity<>("User deleted successfully",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     /**
      * @author panchafula
