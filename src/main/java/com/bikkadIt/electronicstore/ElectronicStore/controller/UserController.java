@@ -92,7 +92,7 @@ public class UserController {
      * @return userList
      */
         // get all users
-        @GetMapping("/")
+        @GetMapping
         public ResponseEntity <PagebleResponse<UserDto>> getAllUser(@RequestParam(value="pageNumber",defaultValue = AppConstant.PAGE_NUMBER,required = false) int pageNumber,
                                                                    @RequestParam(value = "pageSize",defaultValue = AppConstant.PAGE_SIZE,required = false) int pageSize,
                                                                    @RequestParam(value="sortBy",defaultValue = AppConstant.SORT_BY,required = false) String sortBy,
