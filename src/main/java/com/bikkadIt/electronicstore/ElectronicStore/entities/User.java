@@ -3,6 +3,8 @@ package com.bikkadIt.electronicstore.ElectronicStore.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -36,6 +38,8 @@ public class User {
         private String imageName;
 
         private String roles;
+        @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+        private List<Order> orders = new ArrayList<>();
     }
 
 
