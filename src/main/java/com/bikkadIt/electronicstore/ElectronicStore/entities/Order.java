@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="Item_Order")
 public class Order {
+
     @Id
     private String orderId;
 
@@ -28,7 +29,6 @@ public class Order {
     //enum
     //boolean= false=> not paid  // true=> paid
     private String paymentStatus;
-
     private int orderAmount;
 
     @Column(length = 1000)
