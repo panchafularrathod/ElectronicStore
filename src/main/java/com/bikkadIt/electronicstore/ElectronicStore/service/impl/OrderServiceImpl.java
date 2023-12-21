@@ -13,6 +13,7 @@ import com.bikkadIt.electronicstore.ElectronicStore.repository.UserRepository;
 import com.bikkadIt.electronicstore.ElectronicStore.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -97,13 +99,18 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getOrderOfUser(String userId) {
         User user1 = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.NOT_FOUND));
-        orderRepository.findById(user1 );
+        List<OrderDto> orders= orderRepository.findById(user1 );
 
-        return null;
+        List<OrderDto> orderdtos = orders.stream().map(order -> modelMapper.map(order, OrderDto.class));
+
+        return orderdtos;
     }
 
     @Override
     public PagebleResponse<OrderDto> getOrder(int pagesize, int pageNumber, String sortBy, String sortDir) {
+        Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber,pagesize,sort);
+        orderRepository.findAll(pageable);
         return null;
     }
 }
