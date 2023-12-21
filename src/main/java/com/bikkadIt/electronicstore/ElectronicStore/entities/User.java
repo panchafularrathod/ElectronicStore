@@ -38,6 +38,8 @@ public class User {
         private String imageName;
 
         private String roles;
+
+
         @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
         private List<Order> orders = new ArrayList<>();
     }

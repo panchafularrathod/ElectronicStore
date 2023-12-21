@@ -29,6 +29,7 @@ public class Order {
     //enum
     //boolean= false=> not paid  // true=> paid
     private String paymentStatus;
+
     private int orderAmount;
 
     @Column(length = 1000)
@@ -45,6 +46,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private  User user;
+
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<OrderItem> ordersItems = new ArrayList<>();
 }

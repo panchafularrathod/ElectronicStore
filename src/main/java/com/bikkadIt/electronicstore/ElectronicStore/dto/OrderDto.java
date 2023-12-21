@@ -17,17 +17,13 @@ import java.util.List;
 @ToString
 public class OrderDto {
 
+    private String orderId;
 
     private int orderAmount;
-
-
-    ////PENDING, DISPATCHED, DILIVERD
-
+    //PENDING, DISPATCHED, DILIVERD
     // ENUM
-
     private String orderStatus = "PENDING";
-
-    //not paid paid
+    //not paid , paid
     //enum
     //boolean= false=> not paid  // true=> paid
     private String paymentStatus="NOT PAID";

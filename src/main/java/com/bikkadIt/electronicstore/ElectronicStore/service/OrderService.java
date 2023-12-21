@@ -1,6 +1,7 @@
 package com.bikkadIt.electronicstore.ElectronicStore.service;
 
 
+import com.bikkadIt.electronicstore.ElectronicStore.dto.CretateOrderRequst;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.OrderDto;
 import com.bikkadIt.electronicstore.ElectronicStore.payload.PagebleResponse;
 
@@ -9,10 +10,10 @@ import java.util.List;
 public interface OrderService {
 
     //create order
-    OrderDto createOrder(OrderDto orderDto, String userId, String cartId);
+    OrderDto createOrder(CretateOrderRequst orderDto);
     //remove order
 
-    void removeOrder(String userId);
+    void removeOrder(String orderId);
     //get orders of user
     List<OrderDto> getOrderOfUser(String userId);
 

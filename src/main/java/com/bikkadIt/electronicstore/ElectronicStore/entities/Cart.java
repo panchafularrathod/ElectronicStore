@@ -16,7 +16,9 @@ import java.util.List;
 public class Cart {
     @Id
     private String cartId;
+
     private Date createAt;
+
     @OneToOne
     private User user;
 
