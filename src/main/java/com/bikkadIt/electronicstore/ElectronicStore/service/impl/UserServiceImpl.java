@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserServiceI {
            private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
         public UserDto createUser(UserDto userDto) {
-            logger.info("Intiating the dao call for the create user.............");
+            logger.info("Initiating the dao call for the create user.............");
 
             //generate uniue id in  String format
             String userId= UUID.randomUUID().toString();
