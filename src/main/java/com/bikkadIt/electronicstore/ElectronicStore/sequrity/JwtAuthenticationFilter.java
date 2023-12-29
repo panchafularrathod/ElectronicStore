@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTHelper jwtHelper;
     @Autowired
-    private UserDetailsService userDetails;
+    private UserDetailsService userDetailsService;
 
     private Logger logger= LoggerFactory.getLogger(OncePerRequestFilter.class);
     @Override
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (username !=null && SecurityContextHolder.getContext().getAuthentication()==null){
 
             //fetch user detail from from username
-            UserDetails userDetails1 = this.userDetails.loadUserByUsername(username);
+            UserDetails userDetails1 = this.userDetailsService.loadUserByUsername(username);
             Boolean validateToken = this.jwtHelper.validateToken(token, userDetails1);
             if (validateToken){
                 // set authentication

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -31,6 +32,8 @@ public class Product {
     private String productImageName;
     @ManyToOne
     private Category category;
+    @OneToMany(mappedBy = "product") // This should match the field name in OrderItem
+    private List<OrderItem> orderItems;
 
 
 }
