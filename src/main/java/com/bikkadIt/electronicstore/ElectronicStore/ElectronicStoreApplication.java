@@ -16,7 +16,7 @@ public class ElectronicStoreApplication implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws Exception{
 
 		System.out.println(passwordEncoder.encode("abed"));
 	}

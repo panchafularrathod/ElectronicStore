@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @Component
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTHelper jwtHelper;
@@ -37,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token=null;
         if (requestHeader!=null && requestHeader.startsWith("Bearer")){
 
-            requestHeader.substring(7);
+          token=  requestHeader.substring(7);
             try {
                  username = this.jwtHelper.getUsernameFromToken(token);
             }catch (IllegalArgumentException e){

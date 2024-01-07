@@ -2,6 +2,7 @@ package com.bikkadIt.electronicstore.ElectronicStore.service.impl;
 
 import com.bikkadIt.electronicstore.ElectronicStore.Constant.AppConstant;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
+import com.bikkadIt.electronicstore.ElectronicStore.entities.Role;
 import com.bikkadIt.electronicstore.ElectronicStore.entities.User;
 import com.bikkadIt.electronicstore.ElectronicStore.exception.ResourceNotFoundException;
 import com.bikkadIt.electronicstore.ElectronicStore.helper.Helper;
@@ -58,8 +59,8 @@ public class UserServiceImpl implements UserServiceI {
             User user = this.modelMapper.map(userDto, User.class);
 
             //fetch role of normal and set  it to user
-          // Role role =roleRepository.findById(normalRoleId).get();
-           // user.getRoles().add(role);
+         //  Role role =roleRepository.findById(normalRoleId).get();
+          //  user.getRoles().add(role);
             User savedUser= userRepository.save(user);
             UserDto userDto1 = this.modelMapper.map(savedUser, UserDto.class);
             logger.info("complete the dao call for create user.......");

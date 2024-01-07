@@ -2,9 +2,9 @@ package com.bikkadIt.electronicstore.ElectronicStore.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -14,6 +14,8 @@ import javax.persistence.Table;
 @Table(name="Roles")
 public class Role {
     @Id
-    private String roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int roleId;
     private String roleName;
+
 }

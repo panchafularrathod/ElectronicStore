@@ -5,6 +5,7 @@ import com.bikkadIt.electronicstore.ElectronicStore.dto.JwtResponse;
 import com.bikkadIt.electronicstore.ElectronicStore.dto.UserDto;
 import com.bikkadIt.electronicstore.ElectronicStore.sequrity.JWTHelper;
 import com.bikkadIt.electronicstore.ElectronicStore.service.UserServiceI;
+import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+//@Api(value = "AuthController", description = "Apis for Authentication")
 public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -67,5 +70,10 @@ public class AuthController {
         UserDto userDto = this.modelMapper.map(userDetailsService.loadUserByUsername(name), UserDto.class);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
+  /*  @PostMapping("/google")
+    public ResponseEntity<JwtResponse> loginWithGoogle(@RequestBody Map<String, Object> data){
+
+return null;
+    }*/
 
 }

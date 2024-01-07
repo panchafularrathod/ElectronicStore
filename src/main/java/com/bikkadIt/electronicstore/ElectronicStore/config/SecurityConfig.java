@@ -1,5 +1,4 @@
 package com.bikkadIt.electronicstore.ElectronicStore.config;
-
 import com.bikkadIt.electronicstore.ElectronicStore.sequrity.JWTAuthenticationEntryPoint;
 import com.bikkadIt.electronicstore.ElectronicStore.sequrity.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +40,7 @@ public class SecurityConfig {
                 .logoutUrl("do-logout");*/
         httpSecurity.csrf()
                 .disable()
-                .cors()
+                .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/auth/login")
@@ -57,6 +54,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.authenticationProvider(daoAuthenticationProvider());
         return httpSecurity.build();
     }
     @Bean
